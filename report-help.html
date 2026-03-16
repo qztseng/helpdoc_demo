@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2c3e50">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Understanding Your DeepXray Bone Density Report | AIM</title>
+<style>
+  :root {
+    --primary: #c0392b;
+    --accent: #e67e22;
+    --bg: #fafafa;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-light: #555;
+    --border: #e0e0e0;
+    --green: #27ae60;
+    --red: #e74c3c;
+    --blue: #2980b9;
+    --info-bg: #eaf4fc;
+    --warn-bg: #fef9e7;
+    --tip-bg: #eafaf1;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 1.5rem 1rem 2rem;
+    text-align: center;
+  }
+  .header-logo {
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.8rem;
+  }
+  .header-logo img { height: 44px; filter: brightness(0) invert(1); }
+  .header-logo svg { height: 44px; width: auto; }
+  .header h1 { font-size: 1.4rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .header p { font-size: 0.9rem; opacity: 0.8; }
+  .lang-toggle { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.8rem; }
+  .lang-btn {
+    padding: 0.25rem 0.9rem; border: 1px solid rgba(255,255,255,0.4); border-radius: 20px;
+    background: transparent; color: white; cursor: pointer; font-size: 0.82rem; transition: all 0.2s;
+  }
+  .lang-btn.active { background: rgba(255,255,255,0.2); border-color: white; }
+
+  .container { max-width: 800px; margin: 0 auto; padding: 0.8rem; }
+
+  /* Quick guide hero */
+  .qg {
+    background: var(--card-bg); border-radius: 12px; padding: 1.5rem 1.2rem;
+    margin: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .qg h2 { font-size: 1.2rem; color: var(--primary); margin-bottom: 0.3rem; }
+  .qg .subtitle { font-size: 0.88rem; color: var(--text-light); margin-bottom: 1rem; }
+
+  /* Numbered steps */
+  .step { display: flex; gap: 0.8rem; margin: 1rem 0; align-items: flex-start; }
+  .step-num {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--primary); color: white; font-size: 0.85rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 0.1rem;
+  }
+  .step-body { flex: 1; }
+  .step-body h3 { font-size: 1rem; margin-bottom: 0.2rem; }
+  .step-body p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.3rem; }
+
+  /* WHO mini table */
+  .who-mini { width: 100%; border-collapse: collapse; margin: 0.6rem 0; font-size: 0.88rem; }
+  .who-mini th, .who-mini td { padding: 0.5rem 0.7rem; text-align: left; border-bottom: 1px solid var(--border); }
+  .who-mini th { background: #f5f5f5; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; }
+  .who-mini tr:last-child td { border-bottom: none; }
+
+  .badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 10px; font-size: 0.78rem; font-weight: 600; color: white; }
+  .badge-green { background: var(--green); }
+  .badge-yellow { background: var(--accent); }
+  .badge-red { background: var(--red); }
+
+  /* Score bar */
+  .score-bar-wrap { margin: 0.8rem 0; }
+  .score-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; font-size: 0.7rem; font-weight: 600; color: white; }
+  .score-bar > div { display: flex; align-items: center; justify-content: center; }
+  .sb-n { background: var(--green); flex: 3; }
+  .sb-o { background: var(--accent); flex: 3; }
+  .sb-p { background: var(--red); flex: 4; }
+  .score-labels { display: flex; font-size: 0.72rem; color: var(--text-light); margin-top: 0.2rem; }
+  .score-labels span:first-child { flex: 3; text-align: right; padding-right: 4px; }
+  .score-labels span:last-child { flex: 7; padding-left: 4px; }
+
+  /* Info boxes */
+  .info-box { border-radius: 8px; padding: 0.8rem 1rem; margin: 0.8rem 0; font-size: 0.9rem; }
+  .info-box.blue { background: var(--info-bg); border-left: 4px solid var(--blue); }
+  .info-box.yellow { background: var(--warn-bg); border-left: 4px solid var(--accent); }
+  .info-box.green { background: var(--tip-bg); border-left: 4px solid var(--green); }
+  .info-box.red { background: #fdecea; border-left: 4px solid var(--red); }
+  .info-box strong { display: block; margin-bottom: 0.2rem; font-size: 0.88rem; }
+
+  /* Divider */
+  .divider {
+    text-align: center; margin: 2rem 0 1rem; padding: 0.5rem 0;
+    border-top: 2px solid var(--border); color: var(--text-light); font-size: 0.85rem;
+  }
+  .divider span { background: var(--bg); padding: 0 1rem; position: relative; top: -0.7rem; }
+
+  /* Section cards (detailed) */
+  .section {
+    background: var(--card-bg); border-radius: 12px; padding: 1.5rem 1.2rem;
+    margin: 1.2rem 0; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .section h2 { font-size: 1.15rem; color: var(--primary); margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--border); }
+  .section h3 { font-size: 1rem; color: var(--text); margin: 1rem 0 0.4rem; }
+  .section p { margin-bottom: 0.6rem; color: var(--text-light); font-size: 0.93rem; }
+
+  /* Accordion */
+  details { margin: 0.6rem 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  details summary {
+    padding: 0.8rem 1rem; cursor: pointer; font-weight: 600; font-size: 0.92rem;
+    background: #f9f9f9; list-style: none; display: flex; align-items: center; gap: 0.4rem;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before { content: "▸"; transition: transform 0.2s; font-size: 0.75rem; color: var(--primary); }
+  details[open] summary::before { transform: rotate(90deg); }
+  details .dc { padding: 0.8rem 1rem; font-size: 0.9rem; color: var(--text-light); }
+  details .dc p { margin-bottom: 0.5rem; }
+
+  /* Example table */
+  .ex-table { width: 100%; border-collapse: collapse; margin: 0.6rem 0; font-size: 0.85rem; }
+  .ex-table th, .ex-table td { padding: 0.5rem 0.6rem; border: 1px solid var(--border); text-align: center; }
+  .ex-table th { background: #f0f0f0; font-weight: 600; }
+  .ex-table .hl { background: #fff3cd; font-weight: 600; }
+
+  /* Disclaimer */
+  .disclaimer { background: #f8f8f8; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; font-size: 0.82rem; color: #777; }
+
+  /* Footer */
+  .footer { background: #2c3e50; color: #aab; text-align: center; padding: 1.5rem 1rem; margin-top: 1.5rem; font-size: 0.82rem; line-height: 1.8; }
+  .footer a { color: #7fb3d8; }
+
+  /* Bilingual */
+  .zh { display: none; }
+  body.lang-zh .en { display: none; }
+  body.lang-zh .zh { display: block; }
+  body.lang-en span.zh { display: none; }
+  body.lang-zh span.en { display: none; }
+  body.lang-zh span.zh { display: inline; }
+  body.lang-en span.en { display: inline; }
+
+  /* ── Tables: horizontal scroll on narrow screens ─────────── */
+  .who-mini, .ex-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+  /* restore inner table structure after display:block on the table element */
+  .who-mini thead, .ex-table thead { display: table-header-group; }
+  .who-mini tbody, .ex-table tbody { display: table-row-group; }
+  .who-mini tr, .ex-table tr       { display: table-row; }
+  .who-mini th, .who-mini td,
+  .ex-table th, .ex-table td       { display: table-cell; }
+
+  /* ── Responsive: Tablet ≤ 768 px ────────────────────────── */
+  @media (max-width: 768px) {
+    .container { padding: 0.6rem; }
+    .section { padding: 1.2rem 1rem; }
+    .qg { padding: 1.2rem 1rem; }
+  }
+
+  /* ── Responsive: Mobile ≤ 600 px ────────────────────────── */
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.1rem; }
+    .header p  { font-size: 0.82rem; }
+    .header-logo img { height: 36px; }
+    .qg, .section { padding: 0.9rem 0.75rem; }
+    .section h2 { font-size: 1.05rem; }
+    .step-body h3 { font-size: 0.95rem; }
+    .info-box { font-size: 0.85rem; padding: 0.7rem 0.85rem; }
+    .who-mini th, .who-mini td { padding: 0.4rem 0.5rem; font-size: 0.82rem; }
+    .ex-table th, .ex-table td { padding: 0.35rem 0.4rem; font-size: 0.78rem; }
+    .score-bar { font-size: 0.62rem; }
+    .score-labels { font-size: 0.65rem; }
+    .divider { margin: 1.5rem 0 0.8rem; }
+    details summary { font-size: 0.85rem; padding: 0.75rem 0.9rem; }
+    .footer { padding: 1.2rem 0.8rem; font-size: 0.78rem; }
+  }
+
+  /* ── Responsive: Small phones ≤ 400 px ──────────────────── */
+  @media (max-width: 400px) {
+    .header h1 { font-size: 0.98rem; }
+    .header-logo img { height: 30px; }
+    .lang-btn { padding: 0.2rem 0.65rem; font-size: 0.76rem; }
+    .score-bar > div { font-size: 0.55rem; }
+    .step-num { width: 26px; height: 26px; font-size: 0.78rem; }
+    .badge { font-size: 0.72rem; padding: 0.12rem 0.5rem; }
+  }
+</style>
+</head>
+<body class="lang-en">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo">
+    <img src="resources/AIM_Logo_nobg.png" alt="AIM Logo" style="height:42px; filter: brightness(0) invert(1);">
+  </div>
+  <h1 class="en">Understanding Your Bone Density Report</h1>
+  <h1 class="zh">瞭解您的骨密度報告</h1>
+  <p class="en">DeepXray AI &mdash; Bone Mineral Density Analysis</p>
+  <p class="zh">DeepXray AI &mdash; 骨密度分析</p>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">English</button>
+    <button class="lang-btn" id="btn-zh" onclick="setLang('zh')">中文</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<!--  PART 1: QUICK GUIDE                                         -->
+<!-- ============================================================ -->
+
+<div class="qg" id="quick-guide">
+  <h2 class="en">Quick Guide: Reading Your Report</h2>
+  <h2 class="zh">快速指南：如何閱讀您的報告</h2>
+  <p class="subtitle en">This section covers the essentials. For more detail, scroll to the <a href="#detailed">in-depth explanations</a> below.</p>
+  <p class="subtitle zh">本節涵蓋重點內容。如需更多細節，請捲動至下方的<a href="#detailed">詳細說明</a>。</p>
+
+  <!-- STEP 1: WHO Classification -->
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3><span class="en">WHO Classification (top-right of your report)</span><span class="zh">WHO 分類（報告右上角）</span></h3>
+      <p class="en">The large coloured label &mdash; <strong style="color:var(--green)">Normal</strong>, <strong style="color:var(--accent)">Osteopenia or Low Bone Mass</strong>, or <strong style="color:var(--red)">Osteoporosis</strong> &mdash; is the overall fracture-risk category based on the WHO standard. It is determined by the <strong>T-score</strong>:</p>
+      <p class="zh">報告中醒目的彩色標籤 &mdash; <strong style="color:var(--green)">Normal（正常）</strong>、<strong style="color:var(--accent)">Osteopenia or Low Bone Mass（骨質缺乏／低骨量）</strong> 或 <strong style="color:var(--red)">Osteoporosis（骨質疏鬆症）</strong> &mdash; 是根據 WHO 標準判定的整體骨折風險分類。它由 <strong>T 值</strong>決定：</p>
+
+      <table class="who-mini">
+        <thead><tr>
+          <th><span class="en">Category</span><span class="zh">類別</span></th>
+          <th>T-score</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-green"><span class="en">Normal</span><span class="zh">正常</span></span></td><td>&ge; &minus;1.0</td></tr>
+          <tr><td><span class="badge badge-yellow"><span class="en">Osteopenia / Low Bone Mass</span><span class="zh">骨質缺乏 (低骨量)</span></span></td><td>&minus;1.0 ~ &minus;2.5</td></tr>
+          <tr><td><span class="badge badge-red"><span class="en">Osteoporosis</span><span class="zh">骨質疏鬆症</span></span></td><td>&le; &minus;2.5</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- STEP 2: What the numbers mean -->
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3><span class="en">BMD, T-score, and Z-score &mdash; the three columns</span><span class="zh">BMD、T 值、Z 值 &mdash; 報告中的三欄數值</span></h3>
+
+      <p class="en"><strong>BMD<sub>DXR</sub> (g/cm&sup2;)</strong> is your estimated bone mineral density, expressed as <em>areal density</em> &mdash; the amount of bone mineral per projected area. This is the same unit used by DXA (g/cm&sup2;), not a volumetric density (g/cm&sup3;), because both DXA and DeepXray measure bone from a 2D X-ray projection. DeepXray estimates this value using the radiogrammetry principle applied to your existing X-ray image.</p>
+      <p class="zh"><strong>BMD<sub>DXR</sub> (g/cm&sup2;)</strong> 是您估測的骨密度，以<em>面積密度</em>表示 &mdash; 即投影面積內的骨礦物質含量。這與 DXA 使用<strong>相同的單位（g/cm&sup2;）</strong>，而非體積密度（g/cm&sup3;），因為 DXA 和 DeepXray 均基於二維 X 光投影原理量測骨骼。DeepXray 是將放射計量（radiogrammetry）原理應用於您現有的 X 光影像來推測此數值。</p>
+
+      <p class="en"><strong>T-score</strong> compares your BMD to a <em>young healthy adult at peak bone mass</em>. It is the number used for WHO classification (for postmenopausal women and men &ge; 50).</p>
+      <p class="zh"><strong>T 值</strong>將您的 BMD 與<em>年輕健康成人骨量高峰期</em>的平均值比較。它是用於 WHO 分類的數值（適用於停經後女性與 50 歲以上男性）。</p>
+
+      <p class="en"><strong>Z-score</strong> compares your BMD to people of <em>the same age and sex</em>. It is more relevant for premenopausal women and men under 50.</p>
+      <p class="zh"><strong>Z 值</strong>將您的 BMD 與<em>同年齡同性別</em>人群比較。對於停經前女性與 50 歲以下男性更具參考意義。</p>
+    </div>
+  </div>
+
+  <!-- STEP 3: Measurement sites -->
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3><span class="en">Measurement sites</span><span class="zh">量測部位</span></h3>
+      <p class="en"><strong>Spine report (Spina)</strong> &mdash; measures L1, L2, L3, L4 lumbar vertebrae. The WHO classification uses the <strong>L1&ndash;L4 average</strong> (area-weighted, shown as "L1234"), not the lowest single vertebra.</p>
+      <p class="zh"><strong>脊椎報告 (Spina)</strong> &mdash; 量測 L1、L2、L3、L4 腰椎。WHO 分類使用 <strong>L1&ndash;L4 均值</strong>（面積加權平均，顯示為「L1234」），而非最低的單一椎體。</p>
+
+      <p class="en"><strong>Hip report (Coxa)</strong> &mdash; measures Femoral Neck and Total Hip for left (L) and right (R) sides. The WHO classification uses the <strong>lowest T-score</strong> among all measured hip sites.</p>
+      <p class="zh"><strong>髖部報告 (Coxa)</strong> &mdash; 量測左 (L) 和右 (R) 的股骨頸（Neck）及全髖部（Total Hip）。WHO 分類取<strong>所有髖部部位中最低的 T 值</strong>。</p>
+
+      <p class="en"><strong>If both reports exist</strong>, the overall classification uses the lowest T-score from all sites (spine average + all hip sites).</p>
+      <p class="zh"><strong>若兩份報告皆有</strong>，整體分類取所有部位中最低的 T 值（脊椎均值 + 所有髖部部位）。</p>
+    </div>
+  </div>
+
+  <!-- STEP 4: Reference population -->
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3><span class="en">Reference population &amp; footnotes</span><span class="zh">參考族群與報告註記</span></h3>
+      <p class="en">Your report states: <em>"T-score calculated using USA/NHANES III young (20&ndash;29) non-Hispanic white female population as reference (ISCD recommendation)"</em>. This is the internationally standardised reference, as recommended by the ISCD and the Taiwan Osteoporosis Association (TOA), used for all patients regardless of sex or ethnicity.</p>
+      <p class="en">This reference population is the source of the <strong>site-specific mean BMD and standard deviation (SD)</strong> used to compute T-scores: T-score&nbsp;=&nbsp;(your BMD &minus; reference mean)&nbsp;&divide;&nbsp;reference SD. Importantly, <strong>each measurement site</strong> (L1, L2, L3, L4, Femoral Neck, Total Hip) has its <strong>own normative reference values</strong> &mdash; its own mean and SD drawn from that same reference population. As a result, the same BMD value will produce a different T-score depending on which site it is measured at; and conversely, two sites with the same T-score reflect different absolute BMD values. This is precisely why the site with the <strong>lowest BMD is not necessarily the site with the lowest T-score</strong> &mdash; a concept illustrated with a concrete example in the Detailed Information section below.</p>
+      <p class="zh">您的報告註記：<em>「T-score 使用 USA/NHANES III 20&ndash;29 歲非西班牙裔白人女性族群作為參考（ISCD 建議）」</em>。這是 ISCD 與台灣骨質疏鬆症學會 (TOA) 建議的國際標準化參考族群，適用於所有患者，不分性別或種族。</p>
+      <p class="zh">這個參考族群提供的是計算 T 值所需的<strong>各部位特異性平均 BMD 與標準差（SD）</strong>：T值&nbsp;=&nbsp;（您的 BMD &minus; 參考平均值）&nbsp;&divide;&nbsp;參考 SD。重要的是，<strong>每個量測部位</strong>（L1、L2、L3、L4、股骨頸、全髖部）都有<strong>各自的常模參考值</strong>&mdash;各有其從同一參考族群中取得的平均值與標準差。因此，相同的 BMD 值在不同部位會換算出不同的 T 值；反過來說，不同部位相同的 T 值，對應的 BMD 絕對值也不相同。這正是為什麼<strong>BMD 最低的部位不一定是 T 值最低的部位</strong>&mdash;這個概念在下方詳細說明中有具體範例說明。</p>
+    </div>
+  </div>
+
+  <!-- STEP 5: Warnings -->
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3><span class="en">Important caveats</span><span class="zh">重要注意事項</span></h3>
+
+      <div class="info-box red">
+        <strong class="en">This is an AI-assisted screening tool, not a DXA replacement</strong>
+        <strong class="zh">這是 AI 輔助篩檢工具，無法取代 DXA</strong>
+        <span class="en">DeepXray estimates BMD from standard X-ray images using AI. It is intended as a screening aid for healthcare professionals. The gold standard for BMD measurement remains Dual-energy X-ray Absorptiometry (DXA). Please discuss the results with your doctor, who may recommend a DXA examination or other follow-up.</span>
+        <span class="zh">DeepXray 使用 AI 從標準 X 光影像估測 BMD，旨在作為醫療專業人員的篩檢輔助工具。BMD 量測的黃金標準仍為雙能量 X 光吸收儀（DXA）。請與您的醫師討論結果，醫師可能會建議進行 DXA 檢查或其他後續追蹤。</span>
+      </div>
+
+      <div class="info-box yellow">
+        <strong class="en">T-scores may differ between institutions</strong>
+        <strong class="zh">不同醫療院所的 T 值可能不同</strong>
+        <span class="en">In Taiwan, different hospitals and DXA vendors may use different reference populations to calculate T-scores. Even with similar BMD values, T-scores can differ significantly depending on which reference database is used. <strong>DeepXray follows the ISCD/TOA recommendation and uses the NHANES III young white female reference.</strong> Please be cautious when comparing T-scores from different facilities, devices, or technologies.</span>
+        <span class="zh">在台灣，不同醫院及 DXA 廠牌可能使用不同的參考族群來計算 T 值。即使 BMD 值相似，因使用的參考資料庫不同，T 值也可能有顯著差異。<strong>DeepXray 遵循 ISCD/TOA 建議，使用 NHANES III 年輕白人女性作為參考。</strong>比較不同醫療院所、不同設備或不同技術的 T 值時，請特別注意。</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end quick guide -->
+
+
+<!-- ============================================================ -->
+<!--  DIVIDER: Detailed Information                                -->
+<!-- ============================================================ -->
+
+<div class="divider" id="detailed">
+  <span class="en">Detailed Information</span>
+  <span class="zh">詳細說明</span>
+</div>
+
+<!-- ============================================================ -->
+<!--  PART 2: DETAILED SECTIONS                                    -->
+<!-- ============================================================ -->
+
+<!-- D1: BMD -->
+<section class="section" id="d-bmd">
+  <h2 class="en">What Is Bone Mineral Density (BMD)?</h2>
+  <h2 class="zh">什麼是骨密度 (BMD)？</h2>
+
+  <p class="en">Bone Mineral Density (BMD) measures how much mineral content &mdash; primarily calcium and phosphorus &mdash; is present in a projected area of bone. It is reported as <strong>areal BMD</strong> in units of <strong>g/cm&sup2;</strong> (grams per square centimetre). This is an <em>areal</em> density, not a volumetric density (g/cm&sup3; in everyday physics), because both DXA and X-ray-based methods measure bone from a two-dimensional X-ray projection. DeepXray uses the same areal BMD unit (g/cm&sup2;) as DXA, estimated using the radiogrammetry principle applied to the 2D X-ray image.</p>
+  <p class="zh">骨密度（BMD）衡量骨骼投影面積中的礦物質含量（主要為鈣與磷），單位為 <strong>g/cm&sup2;</strong>（克/平方公分）。這是<strong>面積密度（areal BMD）</strong>，與物理學上的體積密度（g/cm&sup3;）不同。DXA 基於二維 X 光投影原理，所測得的也是面積密度。DeepXray 與 DXA 採用<strong>相同的面積密度單位（g/cm&sup2;）</strong>，是透過應用於二維 X 光影像的放射計量（radiogrammetry）原理來推測 BMD。</p>
+
+  <p class="en">A higher BMD generally means stronger, denser bones. As people age, bones naturally lose minerals and become less dense, increasing fracture risk. BMD is one of the strongest single predictors of fracture risk, which is why regular screening is important.</p>
+  <p class="zh">BMD 值越高通常代表骨骼越強壯、越緻密。隨著年齡增長，骨骼礦物質自然流失、密度降低，骨折風險隨之增加。BMD 是預測骨折風險最重要的單一指標之一，因此定期篩檢非常重要。</p>
+</section>
+
+<!-- D2: Osteoporosis -->
+<section class="section" id="d-osteo">
+  <h2 class="en">What Is Osteoporosis?</h2>
+  <h2 class="zh">什麼是骨質疏鬆症？</h2>
+
+  <p class="en">Osteoporosis is a condition characterised by weakened bones that are more susceptible to fractures. It is often called a "silent disease" because bone loss occurs gradually without symptoms until a fracture happens. Common fracture sites include the hip, spine, and wrist. Hip fractures in particular can significantly impact quality of life and independence.</p>
+  <p class="zh">骨質疏鬆症是一種骨骼變得脆弱、容易骨折的病症。由於骨質流失是漸進且無症狀的，通常到發生骨折時才被發現，因此常被稱為「沉默的疾病」。常見的骨折部位包括髖部、脊椎及手腕，其中髖部骨折對生活品質與自主能力的影響尤為嚴重。</p>
+
+  <div class="info-box green">
+    <strong class="en">Osteoporosis can be prevented and treated</strong>
+    <strong class="zh">骨質疏鬆症是可以預防與治療的</strong>
+    <span class="en">Early detection allows you and your doctor to take action &mdash; including adequate calcium and vitamin D, regular weight-bearing exercise, avoiding smoking and excessive alcohol, and medication when needed &mdash; before a fracture occurs.</span>
+    <span class="zh">及早發現讓您與醫師可以在骨折發生前採取行動 &mdash; 包括攝取足夠鈣質與維生素 D、規律負重運動、避免吸菸與過量飲酒，以及必要時的藥物治療。</span>
+  </div>
+</section>
+
+<!-- D3: T-score & Z-score in depth -->
+<section class="section" id="d-tscore">
+  <h2 class="en">T-Score &amp; Z-Score in Depth</h2>
+  <h2 class="zh">T 值與 Z 值深入說明</h2>
+
+  <h3 class="en">T-Score</h3><h3 class="zh">T 值</h3>
+  <p class="en">Your T-score tells you how your BMD compares to the average BMD of a young healthy adult at peak bone mass, expressed in standard deviations (SD). For example, T = &minus;1.5 means your BMD is 1.5 SD below the young adult mean.</p>
+  <p class="zh">T 值告訴您，您的 BMD 與年輕健康成人在骨量高峰時的平均值相差幾個標準差 (SD)。例如 T = &minus;1.5 表示您的 BMD 低於年輕成人平均值 1.5 個標準差。</p>
+
+  <p class="en">The WHO classification (Normal / Osteopenia / Osteoporosis) is applicable to <strong>postmenopausal women</strong> and <strong>men aged 50 and older</strong>, per ISCD and TOA guidelines.</p>
+  <p class="zh">WHO 分類（正常/骨質缺乏（低骨量）/骨質疏鬆症）依 ISCD 與 TOA 指引，適用於<strong>停經後女性</strong>及 <strong>50 歲以上男性</strong>。</p>
+
+  <h3 class="en">Z-Score</h3><h3 class="zh">Z 值</h3>
+  <p class="en">Your Z-score compares your BMD to people of the <strong>same age, sex, and ethnic background</strong>. It is more relevant for <strong>premenopausal women and men under 50</strong>. A Z-score &le; &minus;2.0 is classified as "below the expected range for age".</p>
+  <p class="zh">Z 值將您的 BMD 與<strong>同年齡、同性別</strong>人群比較。對<strong>停經前女性與 50 歲以下男性</strong>更具參考意義。Z 值 &le; &minus;2.0 被歸類為「低於年齡預期範圍」。</p>
+
+  <div class="info-box blue">
+    <strong class="en">Reference population for T-score</strong>
+    <strong class="zh">T 值的參考族群</strong>
+    <span class="en">As recommended by the ISCD and TOA, DeepXray uses the NHANES III young (20&ndash;29) non-Hispanic white female reference population for T-score calculation. This standardised reference is used for all patients regardless of sex or ethnicity.</span>
+    <span class="zh">依據 ISCD 與 TOA 建議，DeepXray 使用 NHANES III 年輕（20&ndash;29 歲）非西班牙裔白人女性作為 T 值計算的參考族群。此標準化的參考族群適用於所有患者，不分性別或種族。</span>
+  </div>
+</section>
+
+<!-- D4: Spine report details -->
+<section class="section" id="d-spine">
+  <h2 class="en">Spine (Lumbar) Report &mdash; Details</h2>
+  <h2 class="zh">脊椎（腰椎）報告 &mdash; 詳細說明</h2>
+
+  <p class="en">The spine report from <strong>DeepXray Spina</strong> shows BMD values for L1, L2, L3, and L4 individually, plus a summary row (e.g. "L1234").</p>
+  <p class="zh"><strong>DeepXray Spina</strong> 的脊椎報告會顯示 L1、L2、L3、L4 各自的 BMD 值，以及一個平均值列（如「L1234」）。</p>
+
+  <h3 class="en">How the average BMD is calculated</h3>
+  <h3 class="zh">BMD 均值如何計算</h3>
+  <p class="en">The summary row shows the <strong>area-weighted average</strong> of the selected vertebrae &mdash; not simply the arithmetic mean of four values. This means larger vertebrae contribute proportionally more, consistent with how DXA machines calculate the spine summary.</p>
+  <p class="zh">平均值列顯示的是所選椎體的<strong>面積加權平均值</strong> &mdash; 並非四個數值的簡單算術平均。較大的椎體在計算中貢獻更大比例，與 DXA 儀器計算脊椎均值的方式一致。</p>
+
+  <div class="info-box blue">
+    <strong class="en">Classification uses the average, not the lowest individual vertebra</strong>
+    <strong class="zh">分類使用均值，而非最低的個別椎體</strong>
+    <span class="en">Per ISCD guidelines, the spine WHO classification is determined by the <strong>L1&ndash;L4 average T-score</strong>, not by the worst (lowest) T-score of any single vertebra. Using the lowest single vertebra would overestimate fracture risk.</span>
+    <span class="zh">依據 ISCD 指引，脊椎的 WHO 分類由 <strong>L1&ndash;L4 平均 T 值</strong>決定，而非任何單一椎體最差（最低）的 T 值。使用最低的單一椎體會高估骨折風險。</span>
+  </div>
+
+  <h3 class="en">When vertebrae are excluded</h3>
+  <h3 class="zh">當椎體被排除時</h3>
+  <p class="en">If a vertebra has a fracture, implant, or structural abnormality, your doctor may exclude it. The average is recalculated from the remaining vertebrae (e.g. "L134" if L2 is excluded). Per ISCD guidance, <strong>at least two vertebrae</strong> must remain. If only one is valid, no average or WHO classification will be shown.</p>
+  <p class="zh">若某椎體有骨折、植入物或結構異常，醫師可能會將其排除。均值會使用剩餘椎體重新計算（如 L2 被排除則顯示「L134」）。依 ISCD 指引，<strong>至少須保留兩個椎體</strong>。若僅剩一個有效椎體，將不會顯示均值或 WHO 分類。</p>
+</section>
+
+<!-- D5: Hip report details -->
+<section class="section" id="d-hip">
+  <h2 class="en">Hip Report &mdash; Details</h2>
+  <h2 class="zh">髖部報告 &mdash; 詳細說明</h2>
+
+  <p class="en">The hip report from <strong>DeepXray Coxa</strong> shows BMD for the Femoral Neck (the narrow bridge between the hip joint and thigh bone shaft) and Total Hip (the entire proximal femur), measured for both left and right sides &mdash; typically 4 sites in total.</p>
+  <p class="zh"><strong>DeepXray Coxa</strong> 的髖部報告顯示股骨頸（連接髖關節與大腿骨幹的狹窄區域）及全髖部（整個近端股骨）的 BMD，左右兩側分別量測 &mdash; 通常共 4 個部位。</p>
+
+  <p class="en">The WHO classification is determined by the <strong>lowest T-score</strong> among all measured hip sites.</p>
+  <p class="zh">WHO 分類取決於所有髖部量測部位中<strong>最低的 T 值</strong>。</p>
+
+  <h3 class="en">Total Hip vs. Femoral Neck &mdash; measurement robustness</h3>
+  <h3 class="zh">全髖部 vs. 股骨頸 &mdash; 量測穩健性</h3>
+
+  <p class="en">For <strong>diagnosis</strong>, both ISCD and TOA recommend using whichever site (Femoral Neck or Total Hip) gives the lowest T-score. For <strong>monitoring changes over time</strong>, however, the Total Hip is generally preferred because its larger measurement region is less affected by small positioning differences between scans.</p>
+  <p class="zh"><strong>診斷</strong>方面，ISCD 與 TOA 均建議使用股骨頸或全髖部中 T 值較低者。但在<strong>追蹤骨密度隨時間的變化</strong>方面，通常偏好全髖部，因為其較大的量測區域較不受不同次掃描間微小擺位差異的影響。</p>
+
+  <div class="info-box blue">
+    <strong class="en">Why the Femoral Neck can be more variable</strong>
+    <strong class="zh">為何股骨頸的變異性可能較大</strong>
+    <span class="en">The Femoral Neck is a smaller region of interest (ROI). In DXA, the exact ROI placement can vary due to operator-dependent positioning, leading to greater measurement variability. Since DeepXray's AI model is trained against DXA measurements, these characteristics carry over. That said, Total Hip is also not immune to variability &mdash; for example, the length of femoral shaft included in the analysis region can vary with imaging positioning.</span>
+    <span class="zh">股骨頸的感興趣區域 (ROI) 較小。在 DXA 中，ROI 的精確放置會因操作者的擺位而產生差異，導致量測變異性較大。由於 DeepXray 的 AI 模型是根據 DXA 量測數據訓練的，這些特性也會延續。但全髖部也非完全不受影響 &mdash; 例如，納入分析區域的股骨幹長度可能因影像擺位不同而改變。</span>
+  </div>
+</section>
+
+<!-- D6: Combined -->
+<section class="section" id="d-combined">
+  <h2 class="en">When Both Hip &amp; Spine Reports Are Available</h2>
+  <h2 class="zh">當髖部與脊椎報告皆可用時</h2>
+
+  <p class="en">The overall WHO classification uses the <strong>lowest T-score</strong> from all qualifying sites: the lumbar spine average (L1&ndash;L4), left/right Total Hip, and left/right Femoral Neck. Whichever site gives the lowest T-score determines the classification.</p>
+  <p class="zh">整體 WHO 分類取所有合格部位中的<strong>最低 T 值</strong>：腰椎均值（L1&ndash;L4）、左右全髖部、左右股骨頸。產生最低 T 值的部位決定最終分類。</p>
+</section>
+
+<!-- D7: Normative values -->
+<section class="section" id="d-normative">
+  <h2 class="en">Why the Lowest BMD May Not Be the Lowest T-Score</h2>
+  <h2 class="zh">為何最低 BMD 不一定是最低 T 值</h2>
+
+  <p class="en">Each measurement site has its own <strong>site-specific reference values</strong> (young adult mean and standard deviation). Different vertebrae and hip regions naturally have different bone densities even in healthy young adults. The T-score is calculated relative to the specific reference for that site, so:</p>
+  <p class="zh">每個量測部位都有自己的<strong>部位特異性參考值</strong>（年輕成人平均值與標準差）。即使是健康的年輕人，不同椎體與髖部區域本身就有不同的骨密度。T 值是相對於該部位的特定參考值計算的，因此：</p>
+
+  <table class="ex-table">
+    <thead><tr>
+      <th><span class="en">Vertebra</span><span class="zh">椎體</span></th>
+      <th><span class="en">Your BMD</span><span class="zh">您的 BMD</span></th>
+      <th><span class="en">Young Adult Mean</span><span class="zh">年輕成人平均值</span></th>
+      <th>T-score</th>
+    </tr></thead>
+    <tbody>
+      <tr class="hl"><td>L1</td><td>0.856</td><td>1.087</td><td>&minus;0.9</td></tr>
+      <tr><td>L2</td><td>0.891</td><td>1.174</td><td>&minus;1.5</td></tr>
+      <tr><td>L3</td><td>0.973</td><td>1.224</td><td>&minus;1.2</td></tr>
+      <tr><td>L4</td><td>1.020</td><td>1.188</td><td>&minus;0.6</td></tr>
+    </tbody>
+  </table>
+
+  <p class="en">Here, <strong>L1 has the lowest BMD</strong> (0.856) but a T-score of only &minus;0.9, because L1 also has the lowest reference mean (1.087). <strong>L2 has a higher BMD</strong> (0.891) but the <strong>lowest T-score</strong> (&minus;1.5) because L2's reference mean is higher (1.174). This is completely normal. What matters for classification is the <strong>overall average</strong>, not any single vertebra.</p>
+  <p class="zh">在這裡，<strong>L1 的 BMD 最低</strong>（0.856）但 T 值僅 &minus;0.9，因為 L1 的參考平均值也是最低的（1.087）。<strong>L2 的 BMD 較高</strong>（0.891）但卻有<strong>最低的 T 值</strong>（&minus;1.5），因為 L2 的參考平均值較高（1.174）。這是完全正常的。對分類而言，重要的是<strong>整體均值</strong>，而非任何單一椎體。</p>
+</section>
+
+<!-- D8: Cross-calibration & vendor differences -->
+<section class="section" id="d-cross">
+  <h2 class="en">Comparing BMD Across Different Devices &amp; Technologies</h2>
+  <h2 class="zh">不同設備與技術之間的 BMD 比較</h2>
+
+  <p class="en">Comparing BMD values, T-scores, or Z-scores across different facilities, DXA vendors (e.g. GE, Hologic), and technologies (DXA vs. X-ray-based AI estimation) is complicated and should be done with caution.</p>
+  <p class="zh">比較不同醫療院所、不同 DXA 廠牌（如 GE、Hologic）及不同技術（DXA vs. X 光 AI 估測）之間的 BMD 值、T 值或 Z 值是複雜的，應謹慎看待。</p>
+
+  <h3 class="en">Reference population differences</h3>
+  <h3 class="zh">參考族群差異</h3>
+  <p class="en">In Taiwan, different hospitals may still use different reference populations to calculate T-scores, despite the ISCD/TOA recommendation to use the NHANES III young white female reference. If a facility uses a different reference database, the resulting T-scores can differ significantly even when the underlying BMD values are similar. DeepXray follows the ISCD/TOA recommendation.</p>
+  <p class="zh">在台灣，儘管 ISCD/TOA 建議使用 NHANES III 年輕白人女性參考族群，不同醫院可能仍使用不同的參考族群來計算 T 值。若醫療機構使用不同的參考資料庫，即使 BMD 值相似，所得的 T 值也可能有顯著差異。DeepXray 遵循 ISCD/TOA 建議。</p>
+
+  <h3 class="en">DXA vendor differences &amp; cross-calibration</h3>
+  <h3 class="zh">DXA 廠牌差異與交叉校正</h3>
+  <p class="en">DeepXray's AI model was trained and validated against <strong>GE DXA</strong> BMD measurements. Different DXA vendors (GE, Hologic, etc.) may report slightly different absolute BMD values for the same patient due to differences in hardware, software, and calibration. Published cross-calibration conversion formulae exist (from DXA manufacturers and international research teams) that can compensate for the <strong>systematic bias</strong> between vendors. However, even after conversion, <strong>random error</strong> between individual measurements persists, and results should not be considered interchangeable at the individual patient level.</p>
+  <p class="zh">DeepXray 的 AI 模型是根據 <strong>GE DXA</strong> 的 BMD 量測數據進行訓練與驗證的。不同的 DXA 廠牌（GE、Hologic 等）由於硬體、軟體及校正方式的差異，可能會對同一位患者報告略微不同的 BMD 絕對值。DXA 廠商及國際研究團隊已發表交叉校正轉換公式，可以補償廠牌間的<strong>系統性偏差</strong>。然而，即使經過轉換，個別量測之間的<strong>隨機誤差</strong>仍然存在，結果在個別患者層面上不應被視為完全可互換。</p>
+
+  <div class="info-box yellow">
+    <strong class="en">Practical advice</strong>
+    <strong class="zh">實用建議</strong>
+    <span class="en">For monitoring bone density changes over time, it is best to use the <strong>same device, same technology, and same facility</strong> whenever possible. If you switch devices or facilities, inform your doctor so they can account for potential measurement differences.</span>
+    <span class="zh">追蹤骨密度隨時間的變化時，最好盡可能使用<strong>相同的設備、相同的技術及相同的醫療機構</strong>。若您更換設備或機構，請告知您的醫師，以便他們考量潛在的量測差異。</span>
+  </div>
+</section>
+
+<!-- D9: About DeepXray -->
+<section class="section" id="d-about">
+  <h2 class="en">About DeepXray</h2>
+  <h2 class="zh">關於 DeepXray</h2>
+
+  <p class="en">Your report was generated by <strong>DeepXray</strong>, an AI-assisted medical software developed by Alpha Intelligence Manifolds, Inc. (AIM). DeepXray analyses standard X-ray images you already had taken, and estimates BMD using radiogrammetry combined with artificial intelligence algorithms.</p>
+  <p class="zh">您的報告由 <strong>DeepXray</strong> 產生，這是采風智匯股份有限公司（AIM）開發的 AI 輔助醫療軟體。DeepXray 分析您已拍攝的標準 X 光影像，使用放射線測量法結合人工智慧演算法來估測 BMD。</p>
+
+  <p class="en">DXA (Dual-energy X-ray Absorptiometry) uses two X-ray energy levels to directly measure bone density. DeepXray instead estimates BMD from a single standard X-ray by analysing bone texture, cortical thickness, and anatomical features through AI. It has been clinically validated against DXA with strong correlation.</p>
+  <p class="zh">DXA（雙能量 X 光吸收儀）使用兩種能量的 X 光直接測量骨密度。DeepXray 則透過 AI 分析骨骼紋理、皮質骨厚度及解剖特徵，從單張標準 X 光影像估測 BMD。它已經過與 DXA 的臨床驗證，具有高度相關性。</p>
+</section>
+
+<!-- D10: FAQ -->
+<section class="section" id="d-faq">
+  <h2 class="en">Frequently Asked Questions</h2>
+  <h2 class="zh">常見問題</h2>
+
+  <details>
+    <summary><span class="en">My T-score is Osteopenia. Does that mean I will get osteoporosis?</span><span class="zh">我的 T 值是骨質缺乏（低骨量），代表我會得骨質疏鬆症嗎？</span></summary>
+    <div class="dc">
+      <p class="en">Not necessarily. Osteopenia means your bone density is lower than the young adult average but not yet osteoporosis. With appropriate measures &mdash; calcium, vitamin D, exercise, and lifestyle changes &mdash; many people can slow or reverse bone loss. Talk to your doctor.</p>
+      <p class="zh">不一定。骨質缺乏（低骨量）代表您的骨密度低於年輕成人平均值，但尚未達骨質疏鬆症。透過適當措施 &mdash; 鈣質、維生素 D、運動及生活型態調整 &mdash; 許多人可以減緩甚至逆轉骨質流失。請與醫師討論。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="en">Why does each vertebra show a different T-score?</span><span class="zh">為什麼每個椎體的 T 值都不同？</span></summary>
+    <div class="dc">
+      <p class="en">Each vertebra has a different natural bone density and a different site-specific reference value. A vertebra with a lower BMD may not have the lowest T-score because it is compared against a different (possibly lower) reference mean. The overall average is what matters.</p>
+      <p class="zh">每個椎體有不同的自然骨密度與不同的部位特異性參考值。BMD 較低的椎體其 T 值不一定最低，因為比較對象是不同的（可能較低的）參考平均值。重要的是整體均值。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="en">Why was a vertebra excluded from my report?</span><span class="zh">為什麼某個椎體被排除？</span></summary>
+    <div class="dc">
+      <p class="en">If a vertebra has a fracture, implant, or abnormality that would make its measurement unreliable, it may be excluded. This follows ISCD standard practice. At least two vertebrae must remain for a valid average.</p>
+      <p class="zh">若某椎體有骨折、植入物或異常使其量測不可靠，可能被排除。這符合 ISCD 標準做法。至少須保留兩個椎體才能計算有效均值。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="en">Spine says "Normal" but hip says "Osteopenia" &mdash; which counts?</span><span class="zh">脊椎「正常」但髖部「骨質缺乏」&mdash; 以哪個為準？</span></summary>
+    <div class="dc">
+      <p class="en">The overall classification uses the site with the lowest T-score. If your hip shows Osteopenia and spine shows Normal, the overall result is Osteopenia. Different body sites commonly show different bone density levels.</p>
+      <p class="zh">整體分類取 T 值最低的部位。若髖部為骨質缺乏而脊椎正常，整體結果為骨質缺乏。不同身體部位顯示不同程度的骨密度是很常見的。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="en">I am under 50. Are the results valid?</span><span class="zh">我未滿 50 歲，結果有效嗎？</span></summary>
+    <div class="dc">
+      <p class="en">Yes, but interpretation differs. For premenopausal women and men under 50, the Z-score is preferred. The WHO T-score categories generally should not be applied. Discuss with your doctor.</p>
+      <p class="zh">有效，但解讀方式不同。對停經前女性與 50 歲以下男性，Z 值是首選指標。WHO 的 T 值分類通常不應用於這些族群。請與醫師討論。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="en">My previous DXA T-score is different from this report. Why?</span><span class="zh">我之前 DXA 的 T 值與這份報告不同，為什麼？</span></summary>
+    <div class="dc">
+      <p class="en">There are several possible reasons: different reference populations, different DXA vendors (GE vs. Hologic), different measurement technology (DXA vs. AI-based estimation), actual bone density changes over time, or normal measurement variability. Direct comparison of T-scores across different devices and technologies should be done with caution. Consult your doctor for proper interpretation.</p>
+      <p class="zh">可能原因包括：不同的參考族群、不同的 DXA 廠牌（GE vs. Hologic）、不同的量測技術（DXA vs. AI 估測）、實際骨密度隨時間變化，或正常的量測變異。不同設備與技術之間的 T 值直接比較應謹慎。請諮詢醫師以獲得正確解讀。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="en">What can I do to protect my bones?</span><span class="zh">我可以做什麼來保護骨骼？</span></summary>
+    <div class="dc">
+      <p class="en">Ensure adequate daily calcium (1,000&ndash;1,200 mg) and vitamin D; engage in regular weight-bearing and muscle-strengthening exercises; avoid smoking and limit alcohol; take fall-prevention measures if older. If at elevated risk, medications are available. Consult your healthcare provider.</p>
+      <p class="zh">確保每日攝取足夠鈣質（1,000&ndash;1,200 毫克）與維生素 D；規律進行負重與肌力訓練運動；避免吸菸並限制飲酒；年長者應採取防跌措施。若風險較高，有藥物選項可用。請諮詢醫療照護提供者。</p>
+    </div>
+  </details>
+</section>
+
+<!-- D11: Disclaimer -->
+<section class="section" id="d-disclaimer">
+  <h2 class="en">Important Disclaimer</h2>
+  <h2 class="zh">重要免責聲明</h2>
+
+  <div class="disclaimer">
+    <p class="en">This page is for <strong>educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. DeepXray is an AI-assisted software medical device cleared by the Taiwan Food and Drug Administration (TFDA), designed as an <strong>aid for healthcare professionals</strong>. It is <strong>not a replacement</strong> for DXA or other standard examinations. All diagnosis and treatment decisions should be made by a qualified healthcare provider. If you have questions, consult your doctor.</p>
+    <p class="en" style="margin-top:0.5rem;">TFDA Registration Numbers: DeepXray&#8482; Coxa (Pelvis BMD) &mdash; 衛部醫器製字第007975號 &nbsp;|&nbsp; DeepXray&#8482; Spina (Spine BMD) &mdash; 衛部醫器製字第008246號</p>
+    <p class="zh">本頁面<strong>僅供教育目的</strong>，不構成醫療建議、診斷或治療。DeepXray 是通過衛生福利部食品藥物管理署（食藥署）核可許可的 AI 輔助軟體醫療器材，旨在作為<strong>醫療專業人員的輔助工具</strong>，<strong>不能取代</strong> DXA 或其他標準檢查。所有診斷與治療決策應由合格的醫療照護提供者做出。如有疑問，請諮詢您的醫師。</p>
+    <p class="zh" style="margin-top:0.5rem;">食藥署許可證字號：DeepXray&#8482; Coxa（骨盆 BMD）&mdash; 衛部醫器製字第007975號 &nbsp;|&nbsp; DeepXray&#8482; Spina（脊椎 BMD）&mdash; 衛部醫器製字第008246號</p>
+  </div>
+
+  <div class="info-box blue" style="margin-top:0.8rem;">
+    <strong class="en">Reference guidelines</strong>
+    <strong class="zh">參考指引</strong>
+    <span class="en">Clinical information on this page is based on the 2019 ISCD Official Positions and the 2021 TOA consensus guidelines for adult osteoporosis prevention and management in Taiwan.</span>
+    <span class="zh">本頁面的臨床資訊依據 ISCD 2019 年官方立場，以及 TOA 2021 年台灣成人骨質疏鬆症防治之共識及指引。</span>
+  </div>
+</section>
+
+</div><!-- end container -->
+
+<!-- Footer -->
+<div class="footer">
+  <p><strong>DeepXray</strong> &mdash; AI-Assisted Bone Mineral Density Analysis</p>
+  <p>Manufactured by Alpha Intelligence Manifolds, Inc. (AIM)</p>
+  <p><a href="https://www.aimfolds.com">www.aimfolds.com</a> &nbsp;|&nbsp; <a href="mailto:support@aimfolds.com">support@aimfolds.com</a></p>
+  <p style="margin-top:0.4rem; font-size:0.75rem; opacity:0.7;">&copy; Alpha Intelligence Manifolds, Inc. All rights reserved.</p>
+</div>
+
+<script>
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+  document.querySelectorAll('span.en, span.zh').forEach(function(el) {
+    el.style.display = (lang === 'en') ? (el.classList.contains('en') ? '' : 'none') : (el.classList.contains('zh') ? '' : 'none');
+  });
+}
+(function() {
+  var l = navigator.language || navigator.userLanguage || 'en';
+  setLang(l.startsWith('zh') ? 'zh' : 'en');
+})();
+</script>
+</body>
+</html>
