@@ -102,6 +102,9 @@
   .info-box.green { background: var(--tip-bg); border-left: 4px solid var(--green); }
   .info-box.red { background: #fdecea; border-left: 4px solid var(--red); }
   .info-box strong { display: block; margin-bottom: 0.2rem; font-size: 0.88rem; }
+  .info-box strong.zh { display: none; }
+  body.lang-zh .info-box strong.en { display: none; }
+  body.lang-zh .info-box strong.zh { display: block; }
 
   /* Divider */
   .divider {
@@ -237,14 +240,14 @@
     <div class="step-num">1</div>
     <div class="step-body">
       <h3><span class="en">What is osteoporosis?</span><span class="zh">什麼是骨質疏鬆症？</span></h3>
-      <p class="en">Osteoporosis is a condition where bones become weak and brittle, greatly increasing fracture risk. It is often called a "silent disease" because bone loss has no symptoms until a fracture occurs. In Taiwan, approximately <strong>one in three women</strong> and <strong>one in five men</strong> over the age of 50 will experience an osteoporotic fracture. Hip fractures are particularly serious &mdash; up to <strong>20% of patients</strong> die within the first year, and many lose their independence.</p>
-      <p class="zh">骨質疏鬆症是骨骼變得脆弱、容易骨折的疾病，常被稱為「沉默的疾病」，因為骨質流失通常沒有症狀，直到發生骨折才被發現。在台灣，50 歲以上的族群中，約<strong>每 3 位女性就有 1 位</strong>、<strong>每 5 位男性就有 1 位</strong>會發生骨質疏鬆性骨折。其中髖部骨折尤為嚴重 &mdash; <strong>約 20% 的患者</strong>在一年內死亡，許多人因此失去生活自理能力。</p>
+      <p class="en">Osteoporosis is a condition where bones become weak and brittle, greatly increasing fracture risk. It is often called a "silent disease" because bone loss has no symptoms until a fracture occurs. According to the International Osteoporosis Foundation (IOF), worldwide, approximately <strong>one in three women</strong> and <strong>one in five men</strong> over the age of 50 will experience an osteoporotic fracture in their remaining lifetime. Hip fractures are particularly serious &mdash; up to <strong>20% of patients</strong> die within the first year, and many lose their independence.</p>
+      <p class="zh">骨質疏鬆症是骨骼變得脆弱、容易骨折的疾病，常被稱為「沉默的疾病」，因為骨質流失通常沒有症狀，直到發生骨折才被發現。根據國際骨質疏鬆症基金會（IOF）統計，全球 50 歲以上族群中，約<strong>每 3 位女性就有 1 位</strong>、<strong>每 5 位男性就有 1 位</strong>，在其一生中會發生骨質疏鬆性骨折。其中髖部骨折尤為嚴重 &mdash; <strong>約 20% 的患者</strong>在一年內死亡，許多人因此失去生活自理能力。</p>
 
       <div class="info-box green">
         <strong class="en">The good news: osteoporosis can be prevented and treated</strong>
         <strong class="zh">好消息：骨質疏鬆症是可以預防與治療的</strong>
-        <span class="en">Early detection through bone density screening allows timely intervention &mdash; before a fracture occurs. This report is one such screening result.</span>
-        <span class="zh">透過骨密度篩檢及早發現，可以在骨折發生前及時介入治療。這份報告就是一項篩檢結果。</span>
+        <span class="en">Early detection through bone density screening allows timely intervention &mdash; before a fracture occurs. </span>
+        <span class="zh">透過骨密度篩檢及早發現，可以在骨折發生前及時介入治療。</span>
       </div>
     </div>
   </div>
@@ -320,6 +323,39 @@
     </div>
   </div>
 
+  <!-- 民眾版 FAQ -->
+  <div class="step">
+    <div class="step-num">?</div>
+    <div class="step-body">
+      <h3><span class="en">Frequently Asked Questions</span><span class="zh">常見問題</span></h3>
+
+      <details>
+        <summary><span class="en">My result is "Osteopenia or Low Bone Mass". Does that mean I will get osteoporosis?</span><span class="zh">我的結果是「骨質缺乏（低骨量）」，代表我會得骨質疏鬆症嗎？</span></summary>
+        <div class="dc">
+          <p class="en">Not necessarily. This means your bone density is lower than the young adult average, but has not yet reached the osteoporosis threshold. With appropriate measures &mdash; adequate calcium and vitamin D, regular exercise, and lifestyle changes &mdash; many people can slow or even reverse bone loss. Talk to your doctor about the best approach for you.</p>
+          <p class="zh">不一定。這代表您的骨密度低於年輕成人平均值，但尚未達到骨質疏鬆症的標準。透過適當措施 &mdash; 攝取足夠鈣質與維生素 D、規律運動及調整生活型態 &mdash; 許多人可以減緩甚至逆轉骨質流失。請與醫師討論最適合您的方案。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="en">I am under 50. Are the results still useful?</span><span class="zh">我未滿 50 歲，結果還有參考價值嗎？</span></summary>
+        <div class="dc">
+          <p class="en">Yes, but interpretation is different. For premenopausal women and men under 50, the Z-score (which compares you to people of the same age) is more appropriate than the T-score. The WHO T-score-based classification (Normal / Osteopenia / Osteoporosis) is generally designed for postmenopausal women and men aged 50 and above. Please discuss your results with your doctor.</p>
+          <p class="zh">有參考價值，但解讀方式不同。對停經前女性與 50 歲以下男性，Z 值（與同齡族群比較）比 T 值更適合。WHO 依照 T 值的分類（正常／骨質缺乏／骨質疏鬆症）主要適用於停經後女性與 50 歲以上男性。請與醫師討論您的結果。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="en">My previous bone density test gave a different result. Why?</span><span class="zh">我之前做的骨密度檢查結果跟這次不同，為什麼？</span></summary>
+        <div class="dc">
+          <p class="en">This is not unusual. Different bone density measurement methods, devices, and institutions may produce different values. Bone density may also naturally change over time. If you have concerns, please consult your doctor or a bone health specialist for proper comparison and interpretation.</p>
+          <p class="zh">這並不罕見。不同的骨密度檢測方式、設備和醫療院所可能產生不同的數值，骨密度也可能隨時間自然變化。如有疑慮，請諮詢您的醫師或骨質疏鬆症專科醫師，以進行適當的比較與解讀。</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
 </div><!-- end 民眾版 -->
 
 
@@ -357,6 +393,13 @@
     <strong class="zh">T 值的參考族群</strong>
     <span class="en">As recommended by the ISCD and TOA, DeepXray uses the NHANES III young (20&ndash;29) non-Hispanic white female reference population for T-score calculation. This standardised reference is used for all patients regardless of sex or ethnicity.</span>
     <span class="zh">依據 ISCD 與 TOA 建議，DeepXray 使用 NHANES III 年輕（20&ndash;29 歲）非西班牙裔白人女性作為 T 值計算的參考族群。此標準化的參考族群適用於所有患者，不分性別或種族。</span>
+  </div>
+
+  <div class="info-box yellow">
+    <strong class="en">Taiwan practice: reference database varies across institutions</strong>
+    <strong class="zh">台灣實務現況：各機構使用的參考資料庫不一致</strong>
+    <span class="en">Although the 2021 TOA consensus guidelines recommend following the ISCD position and using the NHANES III database uniformly for T-score calculation, in practice many institutions in Taiwan still use Asian population references or DXA vendor-proprietary databases (derived from each manufacturer's own young adult cohort) to compute T-scores. Since different reference databases have different means and standard deviations, the same BMD value can yield significantly different T-scores depending on which database is used. <strong>This is a major reason why T-scores are difficult to compare across institutions.</strong> DeepXray follows the ISCD/TOA recommendation and uses the NHANES III reference exclusively.</span>
+    <span class="zh">儘管 2021 年台灣骨質疏鬆症學會（TOA）共識指引已建議遵循 ISCD 立場，統一使用 NHANES III 資料庫計算 T 值，但實務上台灣仍有許多醫療機構使用亞洲人參考族群，或 DXA 廠商自有的專屬資料庫（各廠商以自己蒐集的年輕族群數據建立）來計算 T 值。由於不同參考資料庫的平均值與標準差不同，相同的 BMD 值會因使用不同的資料庫而產生顯著不同的 T 值。<strong>這是造成不同醫療機構之間 T 值難以直接比較的重要原因。</strong>DeepXray 遵循 ISCD/TOA 建議，使用 NHANES 資料庫為參考族群。</span>
   </div>
 </section>
 
@@ -435,8 +478,8 @@
 
   <h3 class="en">DXA vendor differences &amp; cross-calibration</h3>
   <h3 class="zh">DXA 廠牌差異與交叉校正</h3>
-  <p class="en">DeepXray's AI model was trained and validated against <strong>GE DXA</strong> BMD measurements. Different DXA vendors (GE, Hologic, etc.) may report slightly different absolute BMD values for the same patient due to differences in hardware, software, and calibration. Published cross-calibration conversion formulae exist (from DXA manufacturers and international research teams) that can compensate for the <strong>systematic bias</strong> between vendors. However, even after conversion, <strong>random error</strong> between individual measurements persists, and results should not be considered interchangeable at the individual patient level.</p>
-  <p class="zh">DeepXray 的 AI 模型是根據 <strong>GE DXA</strong> 的 BMD 量測數據進行訓練與驗證的。不同的 DXA 廠牌（GE、Hologic 等）由於硬體、軟體及校正方式的差異，可能會對同一位患者報告略微不同的 BMD 絕對值。DXA 廠商及國際研究團隊已發表交叉校正轉換公式，可以補償廠牌間的<strong>系統性偏差</strong>。然而，即使經過轉換，個別量測之間的<strong>隨機誤差</strong>仍然存在，結果在個別患者層面上不應被視為完全可互換。</p>
+  <p class="en">DeepXray's AI model was trained and validated against <strong>GE DXA</strong> BMD measurements. Different DXA vendors (GE, Hologic, etc.) produce <strong>significantly different absolute BMD values</strong> for the same patient due to differences in hardware, software, and calibration &mdash; <strong>these values should not be directly compared</strong>. Published cross-calibration conversion formulae exist (from DXA manufacturers and international research teams) that attempt to compensate for the systematic bias between vendors. However, even after applying these conversion formulae, <strong>residual error that cannot be eliminated</strong> still persists, and results should not be considered interchangeable at the individual patient level.</p>
+  <p class="zh">DeepXray 的 AI 模型是根據 <strong>GE DXA</strong> 的 BMD 量測數據進行訓練與驗證的。不同 DXA 廠牌（GE、Hologic 等）量測出的 BMD 存在<strong>顯著差異，不可直接比較</strong>。DXA 廠商及國際研究團隊雖已發表交叉校正轉換公式，嘗試補償廠牌間的系統性偏差，但<strong>即使套用廠商或文獻上公開的轉換公式後，仍存在無法消除的誤差</strong>，結果在個別患者層面上不應被視為可互換。</p>
 
   <div class="info-box yellow">
     <strong class="en">Practical advice</strong>
@@ -497,66 +540,51 @@
   <p class="zh">DXA（雙能量 X 光吸收儀）使用兩種能量的 X 光直接測量骨密度。DeepXray 則透過 AI 分析骨骼紋理、皮質骨厚度及解剖特徵，從單張標準 X 光影像估測 BMD。它已經過與 DXA 的臨床驗證，具有高度相關性。</p>
 </section>
 
-<!-- P9: FAQ -->
+<!-- P9: 專業版 FAQ -->
 <section class="section" id="d-faq">
-  <h2 class="en">Frequently Asked Questions</h2>
-  <h2 class="zh">常見問題</h2>
-
-  <details>
-    <summary><span class="en">My T-score is Osteopenia. Does that mean I will get osteoporosis?</span><span class="zh">我的 T 值是骨質缺乏（低骨量），代表我會得骨質疏鬆症嗎？</span></summary>
-    <div class="dc">
-      <p class="en">Not necessarily. Osteopenia means your bone density is lower than the young adult average but not yet osteoporosis. With appropriate measures &mdash; calcium, vitamin D, exercise, and lifestyle changes &mdash; many people can slow or reverse bone loss. Talk to your doctor.</p>
-      <p class="zh">不一定。骨質缺乏（低骨量）代表您的骨密度低於年輕成人平均值，但尚未達骨質疏鬆症。透過適當措施 &mdash; 鈣質、維生素 D、運動及生活型態調整 &mdash; 許多人可以減緩甚至逆轉骨質流失。請與醫師討論。</p>
-    </div>
-  </details>
+  <h2 class="en">Professional FAQ</h2>
+  <h2 class="zh">專業版常見問題</h2>
 
   <details>
     <summary><span class="en">Why does each vertebra show a different T-score?</span><span class="zh">為什麼每個椎體的 T 值都不同？</span></summary>
     <div class="dc">
-      <p class="en">Each vertebra has a different natural bone density and a different site-specific reference value. A vertebra with a lower BMD may not have the lowest T-score because it is compared against a different (possibly lower) reference mean. The overall average is what matters.</p>
-      <p class="zh">每個椎體有不同的自然骨密度與不同的部位特異性參考值。BMD 較低的椎體其 T 值不一定最低，因為比較對象是不同的（可能較低的）參考平均值。重要的是整體均值。</p>
+      <p class="en">Each vertebra has a different natural bone density and a different site-specific reference value (mean and SD from the NHANES III database). A vertebra with a lower BMD may not have the lowest T-score because it is compared against a different (possibly lower) reference mean. The overall area-weighted average is what determines classification. See the <a href="#d-normative">normative values section</a> for a worked example.</p>
+      <p class="zh">每個椎體有不同的自然骨密度與不同的部位特異性參考值（來自 NHANES III 資料庫的平均值與標準差）。BMD 較低的椎體其 T 值不一定最低，因為比較對象是不同的（可能較低的）參考平均值。決定分類的是面積加權的整體均值。請參閱<a href="#d-normative">常模參考值章節</a>的具體範例。</p>
     </div>
   </details>
 
   <details>
     <summary><span class="en">Why was a vertebra excluded from my report?</span><span class="zh">為什麼某個椎體被排除？</span></summary>
     <div class="dc">
-      <p class="en">If a vertebra has a fracture, implant, or abnormality that would make its measurement unreliable, it may be excluded. This follows ISCD standard practice. At least two vertebrae must remain for a valid average.</p>
-      <p class="zh">若某椎體有骨折、植入物或異常使其量測不可靠，可能被排除。這符合 ISCD 標準做法。至少須保留兩個椎體才能計算有效均值。</p>
+      <p class="en">If a vertebra has a fracture, implant, or structural abnormality that would make its measurement unreliable, it may be excluded per ISCD guidelines. The average is recalculated from the remaining vertebrae (e.g. "L134" if L2 is excluded). At least two vertebrae must remain for a valid average and WHO classification.</p>
+      <p class="zh">若某椎體有骨折、植入物或結構異常使其量測不可靠，依 ISCD 指引可能被排除。均值會使用剩餘椎體重新計算（如 L2 被排除則顯示「L134」）。至少須保留兩個椎體才能計算有效均值與 WHO 分類。</p>
     </div>
   </details>
 
   <details>
-    <summary><span class="en">Spine says "Normal" but hip says "Osteopenia" &mdash; which counts?</span><span class="zh">脊椎「正常」但髖部「骨質缺乏」&mdash; 以哪個為準？</span></summary>
+    <summary><span class="en">Spine says "Normal" but hip says "Osteopenia" &mdash; which determines the classification?</span><span class="zh">脊椎「正常」但髖部「骨質缺乏」&mdash; 以哪個決定分類？</span></summary>
     <div class="dc">
-      <p class="en">The overall classification uses the site with the lowest T-score. If your hip shows Osteopenia and spine shows Normal, the overall result is Osteopenia. Different body sites commonly show different bone density levels.</p>
-      <p class="zh">整體分類取 T 值最低的部位。若髖部為骨質缺乏而脊椎正常，整體結果為骨質缺乏。不同身體部位顯示不同程度的骨密度是很常見的。</p>
+      <p class="en">Per ISCD/TOA guidelines, the overall classification uses the site with the <strong>lowest T-score</strong> among all qualifying measurement sites (spine L1&ndash;L4 average, Femoral Neck, and Total Hip). It is clinically common for different anatomical sites to show different bone density levels.</p>
+      <p class="zh">依據 ISCD/TOA 指引，整體分類取所有合格量測部位（脊椎 L1&ndash;L4 均值、股骨頸、全髖部）中<strong>最低的 T 值</strong>。不同解剖部位顯示不同程度的骨密度在臨床上是常見的。</p>
     </div>
   </details>
 
   <details>
-    <summary><span class="en">I am under 50. Are the results valid?</span><span class="zh">我未滿 50 歲，結果有效嗎？</span></summary>
+    <summary><span class="en">What are the TFDA-cleared indications and age ranges for DeepXray?</span><span class="zh">DeepXray 的食藥署核定適用對象與年齡範圍為何？</span></summary>
     <div class="dc">
-      <p class="en">DeepXray is cleared by TFDA for adult women (age 20 and above) and men age 40 and above. For men under 40, osteoporosis prevalence is extremely low in this population and current data lack sufficient evidence to support reliable performance — the results may not be applicable. For premenopausal women and men under 50, interpretation differs from older adults: the Z-score (comparison with peers of the same age) is preferred over the T-score, as recommended by ISCD and TOA. The WHO T-score categories generally should not be applied to these groups. Discuss your results with your doctor.</p>
-      <p class="zh">DeepXray 已獲 TFDA 核准，適用對象為成年女性（20 歲以上）及 40 歲以上男性。對於未滿 40 歲的男性，此族群骨質疏鬆症盛行率極低，目前資料尚缺乏足夠證據支持本工具在此族群的合理表現，結果可能不適用。對停經前女性與 50 歲以下男性，解讀方式與年長族群不同：依據 ISCD 及 TOA 建議，應優先使用 Z 值（與同齡族群比較）而非 T 值，WHO 的 T 值分類通常不應套用於這些族群。請與醫師討論您的檢測結果。</p>
+      <p class="en">DeepXray is cleared by TFDA for <strong>adult women aged 20 and above</strong> and <strong>men aged 40 and above</strong>. For men under 40, osteoporosis prevalence is extremely low and current data lack sufficient evidence to support reliable performance &mdash; results may not be applicable. For premenopausal women and men under 50, interpretation should follow ISCD/TOA recommendations: use Z-score rather than T-score, and do not apply the WHO T-score classification.</p>
+      <p class="zh">DeepXray 已獲食藥署核定許可，適用對象為<strong>成年女性（20 歲以上）</strong>及 <strong>40 歲以上男性</strong>。對於未滿 40 歲的男性，此族群骨質疏鬆症盛行率極低，目前資料尚缺乏足夠證據支持可靠的表現，結果可能不適用。對停經前女性與 50 歲以下男性，應依 ISCD/TOA 建議：使用 Z 值而非 T 值，且不應套用 WHO 的 T 值分類。</p>
     </div>
   </details>
 
   <details>
-    <summary><span class="en">My previous DXA T-score is different from this report. Why?</span><span class="zh">我之前 DXA 的 T 值與這份報告不同，為什麼？</span></summary>
+    <summary><span class="en">A patient's previous DXA T-score differs from the DeepXray report. How should this be interpreted?</span><span class="zh">患者先前的 DXA T 值與 DeepXray 報告不同，應如何解讀？</span></summary>
     <div class="dc">
-      <p class="en">There are several possible reasons: different reference populations, different DXA vendors (GE vs. Hologic), different measurement technology (DXA vs. AI-based estimation), actual bone density changes over time, or normal measurement variability. Direct comparison of T-scores across different devices and technologies should be done with caution. Consult your doctor for proper interpretation.</p>
-      <p class="zh">可能原因包括：不同的參考族群、不同的 DXA 廠牌（GE vs. Hologic）、不同的量測技術（DXA vs. AI 估測）、實際骨密度隨時間變化，或正常的量測變異。不同設備與技術之間的 T 值直接比較應謹慎。請諮詢醫師以獲得正確解讀。</p>
+      <p class="en">Possible causes include: (1) different reference populations &mdash; some facilities may not use the ISCD/TOA-recommended NHANES III reference; (2) different DXA vendors (GE vs. Hologic) with systematic BMD differences; (3) different measurement technology (DXA vs. AI-based estimation from plain radiographs); (4) actual bone density changes over time; or (5) normal measurement variability. When comparing, it is more meaningful to compare <strong>absolute BMD values (g/cm&sup2;)</strong> rather than T-scores if different reference populations were used. See the <a href="#d-cross">DXA comparison section</a> for details on cross-calibration.</p>
+      <p class="zh">可能原因包括：(1) 不同的參考族群 &mdash; 部分醫療機構可能未使用 ISCD/TOA 建議的 NHANES III 參考；(2) 不同的 DXA 廠牌（GE vs. Hologic）存在系統性 BMD 差異；(3) 不同的量測技術（DXA vs. 基於一般 X 光的 AI 估測）；(4) 實際骨密度隨時間變化；或 (5) 正常量測變異。比較時，若使用了不同參考族群，比較 <strong>BMD 絕對值（g/cm&sup2;）</strong>比比較 T 值更有意義。詳見<a href="#d-cross">DXA 比較章節</a>中的交叉校正說明。</p>
     </div>
   </details>
 
-  <details>
-    <summary><span class="en">What can I do to protect my bones?</span><span class="zh">我可以做什麼來保護骨骼？</span></summary>
-    <div class="dc">
-      <p class="en">Ensure adequate daily calcium (1,000&ndash;1,200 mg) and vitamin D; engage in regular weight-bearing and muscle-strengthening exercises; avoid smoking and limit alcohol; take fall-prevention measures if older. If at elevated risk, medications are available. Consult your healthcare provider.</p>
-      <p class="zh">確保每日攝取足夠鈣質（1,000&ndash;1,200 毫克）與維生素 D；規律進行負重與肌力訓練運動；避免吸菸並限制飲酒；年長者應採取防跌措施。若風險較高，有藥物選項可用。請諮詢醫療照護提供者。</p>
-    </div>
-  </details>
 </section>
 
 <!-- P10: Disclaimer -->
@@ -566,9 +594,9 @@
 
   <div class="disclaimer">
     <p class="en">This page is for <strong>educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. DeepXray is an AI-assisted software medical device cleared by the Taiwan Food and Drug Administration (TFDA), designed as an <strong>aid for healthcare professionals</strong>. It is <strong>not a replacement</strong> for DXA or other standard examinations. All diagnosis and treatment decisions should be made by a qualified healthcare provider. If you have questions, consult your doctor.</p>
-    <p class="en" style="margin-top:0.5rem;">TFDA Registration Numbers: DeepXray&#8482; Coxa (Pelvis BMD) &mdash; 衛部醫器製字第007975號 &nbsp;|&nbsp; DeepXray&#8482; Spina (Spine BMD) &mdash; 衛部醫器製字第008246號</p>
-    <p class="zh">本頁面<strong>僅供教育目的</strong>，不構成醫療建議、診斷或治療。DeepXray 是通過衛生福利部食品藥物管理署（食藥署）核可許可的 AI 輔助軟體醫療器材，旨在作為<strong>醫療專業人員的輔助工具</strong>，<strong>不能取代</strong> DXA 或其他標準檢查。所有診斷與治療決策應由合格的醫療照護提供者做出。如有疑問，請諮詢您的醫師。</p>
-    <p class="zh" style="margin-top:0.5rem;">食藥署許可證字號：DeepXray&#8482; Coxa（骨盆 BMD）&mdash; 衛部醫器製字第007975號 &nbsp;|&nbsp; DeepXray&#8482; Spina（脊椎 BMD）&mdash; 衛部醫器製字第008246號</p>
+    <p class="en" style="margin-top:0.5rem;">TFDA Registration Numbers: DeepXray&#8482; Coxa &mdash; 衛部醫器製字第007975號 &nbsp;|&nbsp; DeepXray&#8482; Spina &mdash; 衛部醫器製字第008246號</p>
+    <p class="zh">本頁面<strong>僅供教育目的</strong>，不構成醫療建議、診斷或治療。DeepXray 是通過衛生福利部食品藥物管理署（食藥署）核定許可的 AI 輔助軟體醫療器材，旨在作為<strong>醫療專業人員的輔助工具</strong>，<strong>不能取代</strong> DXA 或其他標準檢查。所有診斷與治療決策應由合格的醫療照護提供者做出。如有疑問，請諮詢您的醫師。</p>
+    <p class="zh" style="margin-top:0.5rem;">食藥署許可證字號：DeepXray&#8482; Coxa &mdash; 衛部醫器製字第007975號 &nbsp;|&nbsp; DeepXray&#8482; Spina &mdash; 衛部醫器製字第008246號</p>
   </div>
 
   <div class="info-box blue" style="margin-top:0.8rem;">
